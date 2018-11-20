@@ -1864,10 +1864,11 @@ describe('Events', () => {
 
         const server = await internals.server(handler);
         const wreck = Wreck.defaults({ events: true });
-        wreck.events.once('request', (uri, options) => {
+        wreck.events.once('request', (uri, options, req) => {
 
             expect(uri.href).to.equal('http://localhost:' + server.address().port + '/');
             expect(options).to.exist();
+            expect(req).to.exist();
 
             uri.headers.foo = 'bar';
         });
